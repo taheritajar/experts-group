@@ -55,7 +55,6 @@ def build_example(annotation, class_map):
             xmax.append((xmax1) )
             ymax.append((ymax1) )
 
-
             # xmin.append((obj['bndbox']['xmin']) / width)
             # ymin.append((obj['bndbox']['ymin']) / height)
             # xmax.append((obj['bndbox']['xmax']) / width)
