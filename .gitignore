@@ -3,6 +3,7 @@
 *.tar
 *.tfrecord
 /checkpoints/*
+/dataset/*
 /serving/*
 /logs/
 /Untitled.ipynb
