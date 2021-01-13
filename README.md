@@ -1,7 +1,7 @@
 # Thanks to zzh8829
 # YoloV3 Implemented in TensorFlow 2.0
 
-[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/taheritajar/experts-group/blob/main/experts-group-colab.ipynb)
+[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/taheritajar/experts-group/blob/main/experts_group_colab.ipynb)
 
 This repo provides a clean implementation of YoloV3 in TensorFlow 2.0 using all the best practices.
 
