@@ -1,4 +1,6 @@
 import time
+import sys
+sys.path.append('./')
 from absl import app, flags, logging
 from absl.flags import FLAGS
 import cv2

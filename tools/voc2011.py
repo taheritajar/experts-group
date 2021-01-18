@@ -18,7 +18,7 @@ flags.DEFINE_string('classes', './data/voc2012.names', 'classes file')
 
 def build_example(annotation, class_map):
     img_path = os.path.join(
-        FLAGS.data_dir, annotation['filename'])
+        FLAGS.data_dir, 'JPEGImages', annotation['filename'])
     img_raw = open(img_path, 'rb').read()
     key = hashlib.sha256(img_raw).hexdigest()
 
@@ -38,35 +38,11 @@ def build_example(annotation, class_map):
         for obj in annotation['object']:
             difficult = bool(int(obj['difficult']))
             difficult_obj.append(int(difficult))
-			
-            '''
-            # print(float(obj['bndbox']['xmin']))
-            xmin1 = float(obj['bndbox']['xmin']) / width
-            ymin1 = float(obj['bndbox']['ymin']) / height
-            xmax1 = float(obj['bndbox']['xmax']) / width
-            ymax1 = float(obj['bndbox']['ymax']) / height
-            # print(xmin1, ymin1, xmax1, ymax1)
-            if xmin1 == xmax1 or ymin1 == ymax1 or xmin1<0.1 or xmin1>1 or xmax1>1 or xmax1<0.1 or ymin1<0.1 or ymin1>1 or ymax1>1 or ymax1<0.1:
-                print(annotation['filename'])
-                print(xmin1, ymin1, xmax1, ymax1)
-                continue
-            
-            ymin.append((ymin1) )
-            xmin.append((xmin1) )
-            xmax.append((xmax1) )
-            ymax.append((ymax1) )
-            '''
-			
+
             xmin.append(float(obj['bndbox']['xmin']) / width)
             ymin.append(float(obj['bndbox']['ymin']) / height)
             xmax.append(float(obj['bndbox']['xmax']) / width)
             ymax.append(float(obj['bndbox']['ymax']) / height)
-
-
-
-
-
-
             classes_text.append(obj['name'].encode('utf8'))
             classes.append(class_map[obj['name']])
             truncated.append(int(obj['truncated']))
@@ -117,11 +93,11 @@ def main(_argv):
 
     writer = tf.io.TFRecordWriter(FLAGS.output_file)
     image_list = open(os.path.join(
-        FLAGS.data_dir, '%s.txt' % FLAGS.split)).read().splitlines()
+        FLAGS.data_dir, 'ImageSets', 'Main', '%s.txt' % FLAGS.split)).read().splitlines()
     logging.info("Image list loaded: %d", len(image_list))
     for name in tqdm.tqdm(image_list):
         annotation_xml = os.path.join(
-            FLAGS.data_dir, name + '.xml')
+            FLAGS.data_dir, 'Annotations', name + '.xml')
         annotation_xml = lxml.etree.fromstring(open(annotation_xml).read())
         annotation = parse_xml(annotation_xml)['annotation']
         tf_example = build_example(annotation, class_map)
